@@ -12,8 +12,6 @@ export default function (): { uniques: ValuePair; recurrents: ValuePair } {
   const uniquePercentage = ((uniqueNominal / totalNominal) * 100).toFixed(2)
   const recurrentPercentage = ((recurrentNominal / totalNominal) * 100).toFixed(2)
 
-  console.log(uniquePercentage, recurrentPercentage)
-
   return {
     uniques: { nominal: uniqueNominal, percentage: Number(uniquePercentage) / 100 },
     recurrents: { nominal: recurrentNominal, percentage: Number(recurrentPercentage) / 100 },

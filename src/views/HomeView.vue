@@ -68,9 +68,7 @@ onMounted(() => {
   dashboardStore.fetchAllCardsData()
 })
 
-const onDragStart = (evt: unknown) => {
-  // console.log('Drag started:', evt)
-}
+const onDragStart = (evt: unknown) => {}
 
 const onDragEnd = (evt: unknown) => {}
 </script>
