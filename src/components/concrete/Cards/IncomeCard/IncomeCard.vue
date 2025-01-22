@@ -26,12 +26,6 @@
     <div v-if="isChartReady">
       <apexchart :options="chart.options" :series="chart.series"></apexchart>
     </div>
-    <h2
-      v-if="isChartEmpty"
-      class="text-lg font-semibold text-center px-2 w-full h-full justify-center flex items-center"
-    >
-      No data available. Try refreshing the page or modifying your filters.
-    </h2>
   </BaseCard>
 </template>
 
@@ -57,7 +51,6 @@ const props = defineProps<{
 const data = ref<IncomeCardData | null>(null)
 const percentageVariation = ref<string>('increase')
 const isChartReady = ref(false)
-const isChartEmpty = ref(false)
 
 const chart = ref({
   series: [
@@ -112,28 +105,19 @@ watch(dashboardStore, (store) => {
   if (!store.cardLoading[props.dataKey] && !store.cardLoading[`${props.dataKey}_daily`]) {
     data.value = store.cardData[props.dataKey] as IncomeCardData
   }
-  if (store.cardError[props.dataKey + '_daily']) {
-    setChartEmpty(true)
-  } else if (!store.cardLoading[props.dataKey + '_daily']) {
+  if (!store.cardLoading[props.dataKey + '_daily']) {
     const dailyData = store.cardData[`${props.dataKey}_daily`] as IncomeCardData | undefined
 
     if (dailyData?.current_period?.data_formatted) {
       updateChart(dailyData)
-    } else {
-      setChartEmpty(true)
     }
   }
 })
-
-function setChartEmpty(value: boolean) {
-  isChartEmpty.value = value
-}
 
 function updateChart(dailyData: IncomeCardData) {
   chart.value.series[0].data = dailyData.current_period.data_formatted.total_amount || []
   chart.value.series[1].data = dailyData.current_period.data_formatted.attributed_total || []
   chart.value.options.xaxis.categories = dailyData.current_period.data_formatted.date || []
-  setChartEmpty(false)
   isChartReady.value = true
 }
 </script>
