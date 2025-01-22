@@ -2,6 +2,8 @@
 
 ## Instalación / Installation
 
+Esta app utiliza la coleccion de postman adjuntada anteriormente en el mail.
+
 ### Usando npm / Using npm
 ```bash
 npm install
